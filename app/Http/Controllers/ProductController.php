@@ -13,8 +13,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $query = Product::query();
+
+        if($request->has('category') && request->category != ''){
+            $query->where('category_id', $request->category);
+        }
+
+        $products = $query->get();
+        $categories = Category::all();
+
+        return view('products.index', compact('products', categories));
     }
 
     /**

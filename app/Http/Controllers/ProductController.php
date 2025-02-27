@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = Product::query();
 
@@ -22,7 +23,7 @@ class ProductController extends Controller
         $products = $query->get();
         $categories = Category::all();
 
-        return view('products.index', compact('products', categories));
+        return view('products.index', compact('products', 'categories'));
     }
 
     /**

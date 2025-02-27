@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
+
 
 class CartController extends Controller
 {
@@ -29,8 +30,9 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = session()->get('cart', []);
-        return view('cart.index', compact('cart'));
+        # $cart = session()->get('cart', []);
+        $products = Product::all(); 
+        return view('cart.index', compact('products'));
     }
 
     public function removeFromCart($id)

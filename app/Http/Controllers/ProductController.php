@@ -1,30 +1,34 @@
 <?php
-
 namespace App\Http\Controllers;
+
+ini_set('memory_limit', '256M');
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Models\Category;
 
+
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index(Request $request)
     {
         $query = Product::query();
-
-        if($request->has('category') && request->category != ''){
+    
+        if ($request->has('category') && $request->category != '') {
             $query->where('category_id', $request->category);
         }
-
-        $products = $query->get();
+    
+        $products = $query->with('category')->get();
         $categories = Category::all();
-
-        return view('products.index', compact('products', 'categories'));
-    }
+    
+        if (isset($product)) {
+            return view('products.index', compact('product', 'categories'));
+        }else{
+            return redirect(url('/'));
+        }
+}
 
     /**
      * Show the form for creating a new resource.

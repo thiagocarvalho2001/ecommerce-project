@@ -46,4 +46,9 @@
         <p>Cart is empty.</p>
     @endif
 </div>
+
+@if(session('cart') && count(session('cart')) > 0)
+    <a href="{{ route('checkout.index') }}" class="btn btn-seccess">Proceed to Checkout</a>
+@endif
+
 @endsection

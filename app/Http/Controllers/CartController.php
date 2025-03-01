@@ -30,9 +30,8 @@ class CartController extends Controller
 
     public function index()
     {
-        # $cart = session()->get('cart', []);
-        $products = Product::all(); 
-        return view('cart.index', compact('products'));
+        $cart = session()->get('cart', []);
+        return view('cart.index', compact('cart'));
     }
 
     public function removeFromCart($id)
@@ -48,6 +47,10 @@ class CartController extends Controller
 
     public function updateCart(Request $request, $id)
     {
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
         $cart = session()->get('cart', []);
 
         if(isset($cart[$id])){

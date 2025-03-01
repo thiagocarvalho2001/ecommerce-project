@@ -3,7 +3,7 @@
 @section('title', 'All products')
 
 @section('content')
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -23,3 +23,10 @@
 </body>
 </html>
 @endsection
+
+<?php 
+ini_set('memory_limit', -1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>

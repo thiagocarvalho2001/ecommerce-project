@@ -23,12 +23,8 @@ class ProductController extends Controller
         $products = $query->with('category')->get();
         $categories = Category::all();
     
-        if (isset($product)) {
-            return view('products.index', compact('product', 'categories'));
-        }else{
-            return redirect(url('/'));
+        return view('products.index', compact('products', 'categories'));
         }
-}
 
     /**
      * Show the form for creating a new resource.

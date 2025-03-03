@@ -32,6 +32,7 @@ class CheckoutController extends Controller
         $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
 
         $order = Order::create([
+            'user_id' => Auth::id(),
             'customer_name' => $request->customer_name,
             'customer_email' => $request->customer_email,
             'total_price' => $totalPrice,

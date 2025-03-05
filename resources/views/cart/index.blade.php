@@ -1,8 +1,10 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Cart') }}
+        </h2>
+    </x-slot>
 
-@section('title', 'Shopping Cart')
-
-@section('content')
 <div class="container mt-4">
     <h2>Shopping Cart</h2>
 
@@ -50,4 +52,5 @@
 @if(session('cart') && count(session('cart')) > 0)
     <a href="{{ route('checkout.index') }}" class="btn btn-seccess">Proceed to Checkout</a>
 @endif
-@endsection
+
+</x-app-layout>

@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AdminController;
 
 
 Route::get('/', function () {
@@ -25,6 +26,18 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
+
+Route::middleware(['auth', 'admin'])->group(function() {
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::post('/admin/orders/{order}/update', [AdminController::class, 'updateOrder'])->name('admin.orders.update');
+
+    Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/admin/products/store', [AdminController::class, 'storeProduct'])->name('admin.products.store');
+    Route::get('/admin/products/{product}/update', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+    Route::get('/admin/products/{product}/delete', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

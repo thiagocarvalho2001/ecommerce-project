@@ -1,8 +1,9 @@
-@extends('layouts.app')
-
-@section('title', 'Order history')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Orders') }}
+            </h2>
+    </x-slot>
 <div class="container mt-4">
     <h2>Order History</h2>
 
@@ -31,4 +32,4 @@
 
     <a href="{{ route('products.index') }}" class="btn btn-primary">Back to products</a>
 </div>
-@endsection
+</x-app-layout>

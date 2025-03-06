@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 
@@ -34,7 +35,8 @@ class AdminController extends Controller
     public function products()
     {
         $products = Product::all();
-        return view('admin.products', compact('products'));
+        $categories = Category::all();
+        return view('admin.products', compact('products', 'categories'));
     }
 
     public function storeProduct(Request $request)
@@ -42,9 +44,20 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required',
+            'stock' => 'required|numeric'
         ]);
 
-        Product::create($request->only('name', 'price'));
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $request->merge(['image' => 'images/' . $imageName]);
+        }
+
+        Product::create($request->only('name', 'price', 'description', 'image', 'category_id', 'stock'));
         return redirect()->route('admin.products')->with('success', 'Product added!');
     }
 
@@ -53,9 +66,13 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required',
+            'stock' => 'required|numeric'
         ]);
 
-        $product->update($request->only('name', 'price'));
+        $product->update($request->only('name', 'price', 'description', 'image', 'category_id', 'stock'));
         return redirect()->route('admin.products')->with('success', 'Product updated!');
     }
 

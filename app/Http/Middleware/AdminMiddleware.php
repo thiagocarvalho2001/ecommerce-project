@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illumintate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {

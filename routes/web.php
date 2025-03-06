@@ -34,9 +34,9 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::post('/admin/orders/{order}/update', [AdminController::class, 'updateOrder'])->name('admin.orders.update');
 
     Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
-    Route::get('/admin/products/store', [AdminController::class, 'storeProduct'])->name('admin.products.store');
-    Route::get('/admin/products/{product}/update', [AdminController::class, 'updateProduct'])->name('admin.products.update');
-    Route::get('/admin/products/{product}/delete', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
+    Route::post('/admin/products/store', [AdminController::class, 'storeProduct'])->name('admin.products.store');
+    Route::post('/admin/products/{product}/update', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+    Route::delete('/admin/products/{product}/delete', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
 });
 
 Route::middleware('auth')->group(function () {

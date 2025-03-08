@@ -11,7 +11,7 @@
         @foreach($orders as $order)
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5>Order #{{ $order->id }} ({{ $order->status ?? 'Pending' }}</h5>
+                    <h5>Order #{{ $order->id }} ({{ $order->status ?? 'Pending' }})</h5>
                     <p><strong>Name:</strong>{{ $order->customer_name }}</p>
                     <p><strong>Email:</strong>{{ $order->customer_email }}</p>
                     <p><strong>Total Price:</strong>${{number_format($order->total_price, 2) }}</p>

@@ -17,7 +17,7 @@ Route::get('/', function () {
 Route::resource('/products', ProductController::class);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Auth::routes();

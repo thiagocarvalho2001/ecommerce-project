@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
-
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        $orders = Order::count();
-        $products = Product::count();
-        return view('admin.dashboard', compact('orders', 'products'));
+        $orders_count = Order::count();
+        $total_sales = Order::sum('total_price');
+        $products_count = Product::count();
+        $pending = Order::where('status', 'Pending')->count();
+        $shipped = Order::where('status', 'Shipped')->count();
+        $delivered = Order::where('status', 'Delivered')->count();
+        $cancelled = Order::where('status', 'Canceled')->count();
+
+        return view('admin.dashboard', compact('orders_count', 'products_count', 'total_sales', 'pending', 'shipped', 'delivered', 'cancelled'));
     }
 
     public function orders()

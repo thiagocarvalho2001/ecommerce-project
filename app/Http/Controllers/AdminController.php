@@ -18,7 +18,17 @@ class AdminController extends Controller
         $delivered = Order::where('status', 'Delivered')->count();
         $cancelled = Order::where('status', 'Canceled')->count();
 
-        return view('admin.dashboard', compact('orders_count', 'products_count', 'total_sales', 'pending', 'shipped', 'delivered', 'cancelled'));
+        $sales_data = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as total')
+                    ->groupBy('date')
+                    ->orderBy('date', 'ASC')
+                    ->get();
+
+        $sales_dates = $sales_data->pluck('date')->toArray();
+        $sales_totals = $sales_data->pluck('total')->toArray();
+
+        return view('admin.dashboard', compact('orders_count', 'products_count', 
+            'total_sales', 'pending', 'shipped', 'delivered', 'cancelled',
+            'sales_dates', 'sales_totals'));
     }
 
     public function orders()

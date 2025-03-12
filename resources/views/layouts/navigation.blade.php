@@ -21,6 +21,12 @@
                     <x-nav-link :href="route('admin.orders')" :active="request()->routeIs('dashboard')">
                         {{ __('Orders') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Customer Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('wishlist.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Wishlist') }}
+                    </x-nav-link>
                 </div>
             </div>
 

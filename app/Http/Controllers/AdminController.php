@@ -68,8 +68,9 @@ class AdminController extends Controller
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $request->merge(['image' => 'images/' . $imageName]);
+            $path = $image->storeAs('public/products', $imageName);
+
+            $request->merge(['image' => 'storage/products/' . $imageName]);
         }
 
         Product::create($request->only('name', 'price', 'description', 'image', 'category_id', 'stock'));
@@ -91,7 +92,7 @@ class AdminController extends Controller
         return redirect()->route('admin.products')->with('success', 'Product updated!');
     }
 
-    public function deletedProduct(Product $product)
+    public function deleteProduct(Product $product)
     {
         $product->delete();
         return redirect()->route('admin.products')->with('success', 'Product deleted!');

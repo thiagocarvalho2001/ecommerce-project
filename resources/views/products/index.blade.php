@@ -29,6 +29,10 @@
                             <p class="card-text text-muted">Price: ${{ number_format($product->price, 2) }}</p>
                             <a href="#" class="btn btn-primary">Buy Now</a>
                         </div>
+                        <form action="{{ route('wishlist.add', $product->id) }}" method="post">
+                            @csrf
+                            <button class="btn btn-outline-danger">Add to Wishlist</button>
+                        </form>
                     </div>
                 </div>
             @endforeach

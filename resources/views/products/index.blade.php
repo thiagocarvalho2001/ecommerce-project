@@ -23,7 +23,7 @@
             @foreach($products as $product)
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('storage/'.$product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+                        <img src="{{ url('images/' . $product->image) }}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <p class="card-text text-muted">Price: ${{ number_format($product->price, 2) }}</p>

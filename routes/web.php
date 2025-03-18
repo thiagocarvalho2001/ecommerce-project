@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\ImageController;
 
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/products', ProductController::class);
+Route::get('/images/{filename}', [ImageController::class, 'show']);
 
 Auth::routes();
 

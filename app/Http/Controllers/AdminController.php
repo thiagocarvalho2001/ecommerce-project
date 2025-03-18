@@ -65,15 +65,18 @@ class AdminController extends Controller
             'stock' => 'required|numeric'
         ]);
 
-        if($request->hasFile('image')){
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('public/products', $imageName);
+        $imagePath = $request->file('image')->store('products', 'public');
 
-            $request->merge(['image' => 'storage/products/' . $imageName]);
-        }
+        $fileName = basename($imagePath);
 
-        Product::create($request->only('name', 'price', 'description', 'image', 'category_id', 'stock'));
+        Product::create(['name' => $request->name,
+        'price' => $request->price, 
+        'description' => $request->description,
+        'image' => $fileName,
+        'category_id' => $request->category_id,
+        'stock' => $request->stock
+    ]);
+
         return redirect()->route('admin.products')->with('success', 'Product added!');
     }
 

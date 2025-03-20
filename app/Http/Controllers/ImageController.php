@@ -23,21 +23,22 @@ class ImageController extends Controller
 
         $image = $manager->read($file);
 
-        $image->scale(width: 300);
-        $image->scale(height: 300);
+        $image->resize(150, 150);
 
-        if (!is_dir('images')){
+        if (!is_dir('images')) {
             mkdir('images');
         }
 
         $originalFile = pathinfo($filename, PATHINFO_FILENAME);
-        $resizedFilename = $originalFile . '_resized.jpg';
-        $resizedImage = $image->toJpeg()->save('images/' . $resizedFilename );
+        $originalExt = pathinfo($filename, PATHINFO_EXTENSION);
+        $resizedFilename = $originalFile . '_resized.' . $originalExt;
 
-        return new StreamedResponse(function () use ($resizedImage) {
-            echo $resizedImage;
+        $image->save('images/' . $resizedFilename);
+
+        return new StreamedResponse(function () use ($image) {
+            echo $image->encode();
         }, 200, [
-            'Content-Type' => 'image/jpeg',
+            'Content-Type' => 'image',
             'Cache-Control' => 'public, max-age=31536000',
         ]);
     }

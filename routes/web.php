@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
@@ -46,14 +46,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
 
-    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout.index');
-    Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
-
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('wishlist/add/{id}', [WishlistController::class, 'add'])->name('wishlist.add');
     Route::post('wishlist/remove/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+
+    Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout.index');
+    Route::get('/payment', [PaymentController::class, 'ProcessPayment'])->name('checkout.process');
 });
 
 require __DIR__.'/auth.php';

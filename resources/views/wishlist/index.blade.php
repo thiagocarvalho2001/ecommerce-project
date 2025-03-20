@@ -14,7 +14,7 @@
                 @foreach($wishlist as $item)
                     <div class="col-md-4">
                         <div class="card">
-                            <img src="{{ asset('tmp/' . $item->product->image) }}" class="card-img-top">
+                            <img src="{{ url('images/' . $item->product->image) }}" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $item->product->name }}</h5>
                                 <p class="card-text">${{ number_format($item->product->price, 2) }}</p>

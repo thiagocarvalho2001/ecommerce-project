@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\BuyController;
 
 
 Route::get('/', function () {
@@ -23,7 +24,7 @@ Route::get('/images/{filename}', [ImageController::class, 'show']);
 Auth::routes();
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
 
@@ -54,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout.index');
     Route::get('/payment', [PaymentController::class, 'ProcessPayment'])->name('checkout.process');
-});
+
+    });
 
 require __DIR__.'/auth.php';

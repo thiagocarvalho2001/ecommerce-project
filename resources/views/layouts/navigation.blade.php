@@ -12,24 +12,26 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.products')" :active="request()->routeIs('dashboard')">
-                        {{ __('Products') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.orders')" :active="request()->routeIs('dashboard')">
-                        {{ __('Orders') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Customer Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('wishlist.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Wishlist') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('orders.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('My orders') }}
-                    </x-nav-link>
+                    @if (Auth::check() && Auth::user()->is_admin)
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.products')" :active="request()->routeIs('dashboard')">
+                            {{ __('Products') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.orders')" :active="request()->routeIs('dashboard')">
+                            {{ __('Orders') }}
+                        </x-nav-link>
+                    @endif
+                        <x-nav-link :href="route('customer.dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Customer Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('wishlist.index')" :active="request()->routeIs('dashboard')">
+                            {{ __('Wishlist') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('orders.index')" :active="request()->routeIs('dashboard')">
+                            {{ __('My orders') }}
+                        </x-nav-link>
                 </div>
             </div>
 

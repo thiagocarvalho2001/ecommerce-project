@@ -29,12 +29,19 @@
                         <h5 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">{{ $product->name }}</h5>
                         <p class="text-gray-600 dark:text-gray-400 text-sm mb-3">Price: ${{ number_format($product->price, 2) }}</p>
                         <div class="flex items-center justify-between">
-                            <a href="{{ route('checkout.index') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">
-                                Buy Now
-                            </a>
+                            <form action="{{ route('cart.index', $product->id) }}" method="get" class="inline-block">
+                                @csrf
+                                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors">Buy Now</button>
+                            </form>
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                                    Add to Cart
+                                </button>
+                            </form>
                             <form action="{{ route('wishlist.add', $product->id) }}" method="post">
                                 @csrf
-                                <button class="bg-transparent hover:bg-red-500 text-red-500 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded transition-colors focus:outline-none">
+                                <button class="bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-4 border border-transparent rounded transition-colors focus:outline-none">
                                     Add to Wishlist
                                 </button>
                             </form>

@@ -1,49 +1,58 @@
 <x-app-layout>    
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Customer Dashboard') }}
-        </h2>
-    </x-slot>
-    <div class="container">
-        <h2>Welcome, {{ $user->name }}!</h2>
+<x-slot name="header">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
+        {{ __('Customer Dashboard') }}
+    </h2>
+</x-slot>
+<title>Customer dashboard</title>
+<div class="max-w-7xl mx-auto py-6 px-4">
+    <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+        Welcome, {{ $user->name }}!
+    </h2>
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card bg-success text-white">
-                    <div class="card-body">
-                        <h5>Total Spend ${{ number_format($total_spent, 2) }}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Order History</div>
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Total</th>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Total Spend Card -->
+        <div class="bg-green-500 text-white p-6 rounded-lg shadow-md">
+            <h5 class="text-lg font-bold">Total Spend</h5>
+            <p class="text-xl font-semibold">${{ number_format($total_spent, 2) }}</p>
+        </div>
+
+        <!-- Order History -->
+        <div class="md:col-span-2 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-3">Order History</h3>
+
+            @if($orders->isEmpty())
+                <p class="text-gray-500">No orders yet.</p>
+            @else
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300 dark:border-gray-700">
+                        <thead>
+                            <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                <th class="p-2 border border-gray-300 dark:border-gray-600">Order ID</th>
+                                <th class="p-2 border border-gray-300 dark:border-gray-600">Date</th>
+                                <th class="p-2 border border-gray-300 dark:border-gray-600">Status</th>
+                                <th class="p-2 border border-gray-300 dark:border-gray-600">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($orders as $order)
+                                <tr class="border border-gray-300 dark:border-gray-600">
+                                    <td class="p-2 text-center">{{ $order->id }}</td>
+                                    <td class="p-2 text-center">{{ $order->created_at->format('d M Y') }}</td>
+                                    <td class="p-2 text-center">
+                                        <span class="px-3 py-1 rounded-full text-white 
+                                            {{ $order->status == 'Delivered' ? 'bg-green-500' : 'bg-yellow-500' }}">
+                                            {{ $order->status }}
+                                        </span>
+                                    </td>
+                                    <td class="p-2 text-center">${{ number_format($order->total_price, 2) }}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($orders as $order)
-                                <tr>
-                                    <td>{{ $order->id }}</td>
-                                    <td>{{ $order->created_at->format('d M Y') }}</td>
-                                    <td><span class="badge bg-{{ $order->status == 'Delivered' ? 'success' : 'warning' }}">{{ $order->status }}</span></td>                                <td>${{ number_format($order->total_price, 2) }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        @if($orders->isEmpty())
-                            <p class="text-muted">No orders yet.</p>
-                        @endif
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
+</div>
 </x-app-layout>

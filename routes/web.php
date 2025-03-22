@@ -14,19 +14,10 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\BuyController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resource('/products', ProductController::class);
 Route::get('/images/{filename}', [ImageController::class, 'show']);
 
 Auth::routes();
-
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
 
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -55,6 +46,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout.index');
     Route::get('/payment', [PaymentController::class, 'ProcessPayment'])->name('checkout.process');
+
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/cart/update/{id}', [CartController::class, 'updateCart'])->name('cart.update');
 
     });
 
